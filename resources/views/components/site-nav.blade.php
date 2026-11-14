@@ -9,6 +9,6 @@
             <a href="{{ route('about') }}" @if(request()->routeIs('about')) aria-current="page" @endif>Über uns</a>
             <a href="{{ route('contact') }}" @if(request()->routeIs('contact')) aria-current="page" @endif>Kontakt</a>
         </nav>
-        <a class="nav-cta" href="{{ route('contact') }}">Besuch planen <span aria-hidden="true">↗</span></a>
+        <a class="nav-cta" href="{{ route('home') }}#standort">Besuch planen <span aria-hidden="true">↗</span></a>
     </div>
 </header>

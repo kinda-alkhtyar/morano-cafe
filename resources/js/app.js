@@ -39,6 +39,57 @@ document.addEventListener('click', (event) => {
 });
 window.matchMedia('(min-width: 801px)').addEventListener('change', closeMenu);
 
+const carousel = document.querySelector('[data-carousel]');
+if (carousel) {
+    const previous = document.querySelector('[data-carousel-prev]');
+    const next = document.querySelector('[data-carousel-next]');
+    const controls = document.querySelector('.carousel-controls');
+    const updateControls = () => {
+        controls?.classList.toggle('is-static', carousel.scrollWidth <= carousel.clientWidth + 2);
+        previous.disabled = carousel.scrollLeft <= 2;
+        next.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2;
+    };
+    const step = () => carousel.firstElementChild?.getBoundingClientRect().width + (parseFloat(getComputedStyle(carousel).columnGap) || 0) || carousel.clientWidth;
+    previous?.addEventListener('click', () => carousel.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => carousel.scrollBy({ left: step(), behavior: 'smooth' }));
+    carousel.addEventListener('scroll', updateControls, { passive: true });
+    window.addEventListener('resize', updateControls);
+    updateControls();
+
+    let startX = 0;
+    let startScroll = 0;
+    let dragging = false;
+    let moved = false;
+    carousel.addEventListener('pointerdown', (event) => {
+        if (event.pointerType !== 'mouse' || event.button !== 0) return;
+        startX = event.clientX;
+        startScroll = carousel.scrollLeft;
+        dragging = true;
+        moved = false;
+    });
+    carousel.addEventListener('pointermove', (event) => {
+        if (!dragging) return;
+        const distance = event.clientX - startX;
+        if (Math.abs(distance) > 5) {
+            moved = true;
+            carousel.classList.add('is-dragging');
+            carousel.scrollLeft = startScroll - distance;
+        }
+    });
+    const endDrag = () => { dragging = false; carousel.classList.remove('is-dragging'); };
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+    carousel.addEventListener('click', (event) => {
+        if (moved) { event.preventDefault(); moved = false; }
+    }, true);
+    carousel.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+            event.preventDefault();
+            carousel.scrollBy({ left: (event.key === 'ArrowRight' ? 1 : -1) * step(), behavior: 'smooth' });
+        }
+    });
+}
+
 if (!reducedMotion.matches) {
     gsap.registerPlugin(ScrollTrigger);
     const hero = document.querySelector('[data-hero]');
@@ -69,6 +120,15 @@ if (!reducedMotion.matches) {
             opacity: 0, y: 42, duration: 0.9, ease: 'power3.out',
             scrollTrigger: { trigger: element, start: 'top 88%', once: true },
         });
+    });
+
+    gsap.utils.toArray('.coffee-visual, .story-photo, .visit-photo').forEach((frame) => {
+        gsap.fromTo(frame, { clipPath: 'inset(0 0 100% 0)' }, {
+            clipPath: 'inset(0 0 0% 0)', duration: 1.25, ease: 'power3.out',
+            scrollTrigger: { trigger: frame, start: 'top 88%', once: true },
+        });
+        const picture = frame.querySelector('img');
+        if (picture) gsap.fromTo(picture, { yPercent: -4 }, { yPercent: 4, ease: 'none', scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: 1 } });
     });
 
     if (finePointer.matches) {

@@ -5,6 +5,13 @@ use Illuminate\Support\Facades\Storage;
 
 final class ImageUrl
 {
+    public static function exists(?string $path): bool
+    {
+        $path = ltrim((string) $path, '/');
+        return $path !== '' && !str_contains($path, '..')
+            && (is_file(public_path('images/'.$path)) || Storage::disk('public')->exists($path));
+    }
+
     public static function for(?string $path): string
     {
         $path = ltrim((string) $path, '/');

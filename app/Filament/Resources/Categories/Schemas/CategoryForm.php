@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
 
 class CategoryForm
 {
@@ -14,6 +15,9 @@ class CategoryForm
     {
         return $schema
             ->components([
+                Select::make('homepage_slot')->label('Kategorie auf der Startseite')
+                    ->options(\App\Support\HomepageCategories::LABELS)->unique(ignoreRecord: true)
+                    ->helperText('Die sechs Plätze bleiben sichtbar. Ohne Bild erscheint der grüne MORANO+ Platzhalter.'),
                 TextInput::make('name')
                     ->required()->maxLength(255),
                 TextInput::make('slug')
@@ -21,6 +25,7 @@ class CategoryForm
                 Textarea::make('description')
                     ->columnSpanFull(),
                 FileUpload::make('image_path')
+                    ->label('Kategoriebild')->helperText('Für die Startseite wird das Bild im Format 16:9 zugeschnitten.')
                     ->image()->disk('public')->directory('categories')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120),
                 TextInput::make('sort_order')
                     ->required()

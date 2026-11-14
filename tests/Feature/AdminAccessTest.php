@@ -33,6 +33,13 @@ class AdminAccessTest extends TestCase
         $this->actingAs($unverified)->get('/admin')->assertForbidden();
         $this->actingAs($admin)->get('/admin')->assertOk();
         $this->actingAs($admin)->get('/admin/products')->assertOk();
+        $this->actingAs($admin)->get('/admin/homepage-contents')->assertOk();
+        $this->actingAs($admin)->get('/admin/homepage-contents/1/edit')->assertOk();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        Livewire::test(\App\Filament\Resources\HomepageContents\Pages\EditHomepageContent::class, ['record' => 1])
+            ->fillForm(['address' => 'Testadresse 42', 'hours' => [['label' => 'Testtag', 'time' => '09:00–12:00']]])
+            ->call('save')->assertHasNoFormErrors();
+        $this->assertDatabaseHas('homepage_contents', ['id' => 1, 'address' => 'Testadresse 42']);
     }
 
     public function test_admin_can_sign_in_with_password(): void
