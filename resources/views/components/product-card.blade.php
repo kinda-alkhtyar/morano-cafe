@@ -1,0 +1,2 @@
+@props(['product'])
+<article class="product-card" data-reveal><div class="product-image-frame"><img src="{{ \App\Support\ImageUrl::for($product->image_path) }}" alt="{{ $product->name }}" loading="lazy" width="640" height="520"></div><div class="product-card-body"><div><p class="card-kicker">{{ $product->category?->name }}</p><h3>{{ $product->name }}</h3></div><span class="card-price">{{ number_format($product->price / 100, 2, ',', '.') }} €</span></div></article>

@@ -1,0 +1,3 @@
+@extends('layouts.app')
+@section('content')<h1 class="text-3xl font-semibold">Speisekarte</h1>@foreach ($categories as $category)<section class="my-8"><h2 class="text-2xl">{{ $category->name }}</h2><div class="grid gap-6 md:grid-cols-3">@foreach ($category->products as $product)<article><img src="{{ \App\Support\ImageUrl::for($product->image_path) }}" alt="{{ $product->name }}" loading="lazy"><h3>{{ $product->name }}</h3><p>{{ $product->description }}</p><p>{{ number_format($product->price / 100, 2, ',', '.') }} €</p></article>@endforeach</div></section>@endforeach
+@endsection

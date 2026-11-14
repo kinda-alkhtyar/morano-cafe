@@ -1,0 +1,2 @@
+@props(['offer'])
+<article class="offer-card" data-reveal><div class="offer-image-frame"><img src="{{ \App\Support\ImageUrl::for($offer->image_path) }}" alt="" loading="lazy" width="800" height="580"></div><div class="offer-card-content"><span class="eyebrow">Aktuelles Angebot</span><h3>{{ $offer->title }}</h3><p>{{ $offer->description }}</p><span class="offer-price">{{ number_format($offer->offer_price / 100, 2, ',', '.') }} €</span></div></article>
