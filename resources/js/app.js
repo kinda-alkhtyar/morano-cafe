@@ -6,6 +6,7 @@ const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 const header = document.querySelector('[data-site-header]');
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const nav = document.querySelector('[data-primary-nav]');
+const isPersian = document.body.dataset.locale === 'fa';
 
 function syncHeader() {
     header?.classList.toggle('is-scrolled', window.scrollY > 36);
@@ -17,14 +18,14 @@ function closeMenu() {
     header?.classList.remove('is-open');
     document.body.classList.remove('menu-open');
     menuToggle?.setAttribute('aria-expanded', 'false');
-    menuToggle?.setAttribute('aria-label', 'Menü öffnen');
+    menuToggle?.setAttribute('aria-label', isPersian ? 'باز کردن منو' : 'Menü öffnen');
 }
 menuToggle?.addEventListener('click', () => {
     const open = menuToggle.getAttribute('aria-expanded') !== 'true';
     header.classList.toggle('is-open', open);
     document.body.classList.toggle('menu-open', open);
     menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    menuToggle.setAttribute('aria-label', isPersian ? (open ? 'بستن منو' : 'باز کردن منو') : (open ? 'Menü schließen' : 'Menü öffnen'));
     if (open) nav?.querySelector('a')?.focus();
 });
 nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
@@ -193,7 +194,7 @@ if (menuPage) {
         filters.forEach(filter => filter.setAttribute('aria-current', String(filter.dataset.filter === selected)));
         subfilters.forEach(filter => filter.setAttribute('aria-current', String(filter.dataset.filterSub === selectedSub)));
         menuPage.querySelector('[data-menu-subfilters]').hidden = !['kaffee', 'drinks'].includes(selected) && selectedSub === 'all';
-        count.textContent = `${visible} ${visible === 1 ? 'Produkt' : 'Produkte'}`;
+        count.textContent = isPersian ? `${visible.toLocaleString('fa-IR')} محصول` : `${visible} ${visible === 1 ? 'Produkt' : 'Produkte'}`;
         empty.hidden = visible !== 0;
     };
     filters.forEach(filter => filter.addEventListener('click', event => {

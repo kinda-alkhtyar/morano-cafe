@@ -1,2 +1,2 @@
 @props(['eyebrow', 'title', 'text' => null, 'light' => false, 'titleId' => null])
-<div {{ $attributes->class(['section-heading', 'section-heading-light' => $light]) }}><p class="eyebrow">{{ $eyebrow }}</p><h2 @if($titleId) id="{{ $titleId }}" @endif>{{ $title }}</h2>@if($text)<p class="section-intro">{{ $text }}</p>@endif</div>
+<div {{ $attributes->class(['section-heading', 'section-heading-light' => $light]) }}><p class="eyebrow">{{ \App\Support\Locale::text($eyebrow) }}</p><h2 @if($titleId) id="{{ $titleId }}" @endif>{{ \App\Support\Locale::text($title) }}</h2>@if($text)<p class="section-intro">{{ \App\Support\Locale::text($text) }}</p>@endif</div>

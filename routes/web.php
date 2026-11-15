@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\PublicLocale;
+
+Route::middleware(PublicLocale::class)->group(function () {
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/speisekarte', [PageController::class, 'menu'])->name('menu');
@@ -20,3 +23,4 @@ Route::get('/sitemap.xml', function () {
     return response($xml.'</urlset>', 200)->header('Content-Type', 'application/xml; charset=UTF-8');
 })->name('sitemap');
 Route::get('/robots.txt', fn () => response("User-agent: *\nDisallow: /admin\nSitemap: ".route('sitemap')."\n", 200)->header('Content-Type', 'text/plain; charset=UTF-8'));
+});

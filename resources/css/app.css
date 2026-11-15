@@ -1,6 +1,20 @@
 @import 'tailwindcss';
 @source '../views/**/*.blade.php';
 
+.language-switch{display:flex;align-items:center;gap:.45rem;white-space:nowrap;font-size:.78rem;color:#fff}
+.language-switch a{opacity:.7}.language-switch a[aria-current=true],.language-switch a:hover{opacity:1;color:var(--gold-light)}
+html[dir=rtl]{--font-body:'Vazirmatn',sans-serif;--font-display:'Vazirmatn',sans-serif}
+html[dir=rtl] body{text-align:right}
+html[dir=rtl] .hero-shade{transform:scaleX(-1)}
+html[dir=rtl] .hero h1,html[dir=rtl] .display-heading,html[dir=rtl] .section-heading h2{letter-spacing:0;line-height:1.35}
+html[dir=rtl] .eyebrow,html[dir=rtl] .hero-overline,html[dir=rtl] .card-kicker,html[dir=rtl] .footer-label{text-transform:none;letter-spacing:0}
+html[dir=rtl] .primary-nav{margin-left:0;margin-right:auto}
+html[dir=rtl] .menu-toggle{margin-left:0;margin-right:auto}
+html[dir=rtl] .offer-image-frame::after{transform:scaleX(-1)}
+html[dir=rtl] .card-price,html[dir=rtl] .offer-price,html[dir=rtl] .menu-dialog-price{direction:ltr;unicode-bidi:isolate}
+html[dir=rtl] address,html[dir=rtl] a[href^='tel:'],html[dir=rtl] a[href^='mailto:']{unicode-bidi:plaintext}
+@media(max-width:800px){.language-switch{position:absolute;right:80px;top:27px}html[dir=rtl] .language-switch{right:auto;left:80px}}
+
 :root{color-scheme:light;--forest:#092d1d;--forest-deep:#061f15;--green:#174533;--gold:#d9a94d;--gold-light:#f1cf82;--cream:#f8f1e5;--paper:#fffaf2;--ink:#153528;--muted:#5f7166;--line:rgba(9,45,29,.18);--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',Arial,sans-serif;--container:1440px;--gutter:clamp(20px,4vw,72px);--section-space:clamp(80px,9vw,160px);--ease:cubic-bezier(.22,1,.36,1)}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
