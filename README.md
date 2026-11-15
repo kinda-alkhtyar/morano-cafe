@@ -27,7 +27,7 @@ php vendor/bin/phpunit
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-Open `http://127.0.0.1:8000/`. The admin login is at `/admin/login`. To create the first verified admin, run `php artisan morano:create-admin` interactively. Never commit `.env`, passwords, keys, `vendor/`, or `node_modules/`.
+Open `http://127.0.0.1:8000/`. The admin login is at `/admin/login`. To create the first verified admin, run `php artisan morano:create-admin` interactively. Never commit `.env`, passwords, keys, `vendor/`, or `node_modules/`; commit the compiled `public/build/` assets after a production build.
 
 ## Current verification
 
@@ -37,6 +37,6 @@ Run `php vendor/bin/phpunit` and `npm run build` before release. Browser visual 
 
 The compiled Vite manifest and hashed CSS/JS files under `public/build/` are committed so a Railway deployment serves the same tested assets even when its PHP build does not run Node. Run `npm run build` locally and commit the updated manifest and assets whenever CSS or JavaScript changes. Laravel trusts Railway's forwarded HTTPS scheme in production; set `APP_URL` to the public HTTPS URL and keep `APP_ENV=production` and `APP_DEBUG=false` in Railway settings.
 
-After a deployment, run `php artisan migrate --force` in the Railway service and verify with `php artisan migrate:status`. For a **first import into an empty product catalog only**, run `php artisan db:seed --class=ProductionMenuSeeder --force` once. That seeder skips the entire import if any product already exists, preserving existing catalog edits. Review partial catalogs manually instead of rerunning the full `DatabaseSeeder` in production. The menu import does not confirm restaurant prices.
+After a deployment, run `php artisan migrate --force` in the Railway service and verify with `php artisan migrate:status`. The new demo-data migration imports the existing catalog only when the product table is empty; it fills blank business fields and adds the published offers only when no offers exist. Existing catalog and owner edits remain intact. Review partial catalogs manually instead of rerunning the full `DatabaseSeeder` in production. The menu import does not confirm restaurant prices.
 
 Check `/build/manifest.json`, its two referenced `/build/assets/` URLs, `/images/logo/logo.png`, and `/speisekarte` on the public domain after deployment. A new Git commit can trigger Railway redeployment; confirm the deployment completed before checking the site.

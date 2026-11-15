@@ -4,7 +4,7 @@
     <header class="menu-intro container-wide" data-reveal>
         <p class="eyebrow">MORANO+ · Wien</p>
         <h1>Unsere Speisekarte</h1>
-        <p>Entdecke Pinsa, Salate, Sandwiches, Kuchen und Getränke. Alle Angaben werden laufend ergänzt.</p>
+        <p>Pinsa, Salate, Sandwiches, Kuchen und Getränke – entdecke unsere Auswahl.</p>
         <p>Die angezeigten Referenzpreise stammen von Lieferplattformen. Endgültige Restaurantpreise müssen noch bestätigt werden.</p>
     </header>
     <div class="menu-tools container-wide">

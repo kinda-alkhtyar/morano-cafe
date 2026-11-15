@@ -4,7 +4,7 @@
     <header class="editorial-header container-wide" data-reveal>
         <p class="eyebrow">MORANO+ · Wien</p>
         <h1>Aktuelle Angebote</h1>
-        <p>Hier erscheinen unsere derzeit gültigen Angebote.</p>
+        <p>@if($offers->isNotEmpty())Entdecke unsere veröffentlichten Angebote. Die Einlösung erfolgt zu den angegebenen Bedingungen.@elseAktuelle Angebote findest du hier, sobald sie veröffentlicht sind.@endif</p>
     </header>
     <section class="container-wide offers-page-list" aria-label="Angebote">
         @forelse($offers as $offer)

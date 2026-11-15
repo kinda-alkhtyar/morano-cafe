@@ -1,6 +1,6 @@
 @props(['offer'])
 @php
-    $fallback = str_contains($offer->title, 'Hauptgericht') ? 'products/snacks/pinsa-margherita.png' : 'products/keks/new-york-cheesecake.png';
+    $fallback = str_contains($offer->title, 'Hauptgericht') ? 'offers/pinsa-margherita.webp' : 'offers/new-york-cheesecake.webp';
     $image = \App\Support\ImageUrl::exists($offer->image_path) ? $offer->image_path : $fallback;
 @endphp
 <article class="offer-card" data-reveal>

@@ -29,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
     <title>{{ $pageMeta[0] }}{{ request()->routeIs('home') ? '' : ' · MORANO+' }}</title>
     @if (request()->routeIs('home'))
-        <link rel="preload" as="image" href="{{ asset('images/hero/hero.png') }}" fetchpriority="high">
+        <link rel="preload" as="image" href="{{ asset('images/hero/hero.webp') }}" fetchpriority="high">
     @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

@@ -16,7 +16,10 @@ final class ImageUrl
     {
         $path = ltrim((string) $path, '/');
         if ($path !== '' && !str_contains($path, '..')) {
-            if (is_file(public_path('images/'.$path))) return asset('images/'.$path);
+            if (is_file(public_path('images/'.$path))) {
+                $encodedPath = implode('/', array_map('rawurlencode', explode('/', $path)));
+                return asset('images/'.$encodedPath);
+            }
             if (Storage::disk('public')->exists($path)) return Storage::disk('public')->url($path);
         }
         return asset('images/fallback.svg');

@@ -19,7 +19,7 @@ class LaunchPreparationTest extends TestCase
             ->assertDontSee('<iframe', false)->assertSee('Route in Google Maps öffnen');
         $this->get('/')->assertOk()->assertSee('data-map-load', false)->assertDontSee('<iframe', false);
         $this->get('/angebote')->assertOk()->assertSee('<details class="offer-conditions">', false)
-            ->assertSee('Bei NeoTaste ansehen')->assertSee('pinsa-margherita.png');
+            ->assertSee('Bei NeoTaste ansehen')->assertSee('pinsa-margherita.webp');
     }
 
     public function test_legal_pages_are_editable_and_unpublished_pages_stay_out_of_sitemap(): void
