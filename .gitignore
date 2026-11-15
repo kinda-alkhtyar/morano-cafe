@@ -1,7 +1,6 @@
 /.env
 /vendor/
 /node_modules/
-/public/build/
 /public/css/filament
 /public/fonts/filament
 /public/js/filament

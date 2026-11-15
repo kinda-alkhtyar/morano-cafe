@@ -2,6 +2,10 @@
 
 Updated 15 November 2026.
 
+## Railway asset deployment fix
+
+The Vite build directory was ignored by Git, leaving Railway's PHP deployment without the hashed CSS/JS manifest and assets. The production build is now committed under `public/build/`; Laravel also trusts forwarded HTTPS headers behind the production proxy. A dedicated `ProductionMenuSeeder` imports into an empty product catalog only and skips existing data. See the Railway deployment steps in README.md. Live deployment and asset response verification are required after pushing this fix.
+
 ## Completed phases
 
 - **Phase 1 — Laravel foundation:** Laravel 12, MySQL migrations, Filament 4 admin panel, category/product/offer/allergen models and resources, verified admin access, public routes, and image storage.
