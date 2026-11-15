@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Offer;
 use App\Models\Product;
+use App\Models\HomepageContent;
 use Illuminate\Contracts\View\View;
 
 class PageController extends Controller
@@ -34,8 +35,8 @@ class PageController extends Controller
     {
         return view('pages.offers', ['offers' => Offer::query()->where('is_active', true)->where(fn ($q) => $q->whereNull('starts_at')->orWhere('starts_at', '<=', now()))->where(fn ($q) => $q->whereNull('ends_at')->orWhere('ends_at', '>=', now()))->get()]);
     }
-    public function about(): View { return view('pages.placeholder', ['title' => 'Über uns']); }
-    public function contact(): View { return view('pages.placeholder', ['title' => 'Kontakt']); }
-    public function imprint(): View { return view('pages.placeholder', ['title' => 'Impressum']); }
-    public function privacy(): View { return view('pages.placeholder', ['title' => 'Datenschutz']); }
+    public function about(): View { return view('pages.about', ['content' => HomepageContent::find(1) ?? new HomepageContent()]); }
+    public function contact(): View { return view('pages.contact', ['content' => HomepageContent::find(1) ?? new HomepageContent()]); }
+    public function imprint(): View { return view('pages.legal', ['title' => 'Impressum', 'content' => HomepageContent::find(1)?->imprint_content]); }
+    public function privacy(): View { return view('pages.legal', ['title' => 'Datenschutz', 'content' => HomepageContent::find(1)?->privacy_content]); }
 }

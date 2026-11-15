@@ -32,13 +32,23 @@ class HomepageContentResource extends Resource
             Textarea::make('highlights_empty_text')->label('Text ohne ausgewählte Highlights'),
             Textarea::make('offers_empty_text')->label('Text ohne aktuelle Angebote'),
             Textarea::make('address')->label('Bestätigte Adresse'),
-            Repeater::make('hours')->label('Bestätigte Öffnungszeiten')->schema([
+            Repeater::make('hours')->label('Öffnungszeiten')->schema([
                 TextInput::make('label')->label('Wochentage')->required()->maxLength(100),
                 TextInput::make('time')->label('Zeiten oder Ruhetag')->required()->maxLength(100),
             ])->defaultItems(0)->addActionLabel('Zeitraum hinzufügen'),
+            \Filament\Forms\Components\Toggle::make('hours_provisional')->label('Öffnungszeiten vorläufig'),
+            TextInput::make('hours_source')->label('Quelle der Öffnungszeiten')->url(),
             TextInput::make('phone')->label('Telefon')->tel()->maxLength(80),
             TextInput::make('email')->label('E-Mail')->email()->maxLength(255),
             Textarea::make('map_embed_url')->label('Google-Maps-Einbettungsadresse')->rules(['nullable', 'url', 'starts_with:https://www.google.com/maps/embed?'])->helperText('Nur den bestätigten Standort eintragen. Leere Angaben werden nicht veröffentlicht.'),
+            TextInput::make('instagram_url')->label('Instagram')->rules(['nullable', 'url', 'starts_with:https://www.instagram.com/'])->maxLength(255),
+            TextInput::make('facebook_url')->label('Facebook')->rules(['nullable', 'url', 'starts_with:https://www.facebook.com/'])->maxLength(255),
+            TextInput::make('tiktok_url')->label('TikTok')->rules(['nullable', 'url', 'starts_with:https://www.tiktok.com/'])->maxLength(255),
+            TextInput::make('wolt_url')->label('Wolt')->url()->maxLength(255),
+            TextInput::make('foodora_url')->label('Foodora')->url()->maxLength(255),
+            TextInput::make('neotaste_url')->label('NeoTaste')->url()->maxLength(255),
+            Textarea::make('imprint_content')->label('Impressum (freigegebener Text)')->rows(12)->helperText('Erst nach rechtlicher Freigabe veröffentlichen.'),
+            Textarea::make('privacy_content')->label('Datenschutz (freigegebener Text)')->rows(12)->helperText('Google Maps wird erst nach aktivem Klick geladen. Externe Schriften und weitere Dienste in der Erklärung berücksichtigen.'),
         ]);
     }
 

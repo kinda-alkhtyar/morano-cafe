@@ -22,9 +22,10 @@ class ProductsTable
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-                TextColumn::make('price')
-                    ->formatStateUsing(fn ($state) => number_format($state / 100, 2, ',', '.') . ' €')
-                    ->sortable(),
+                TextColumn::make('price')->label('Website-Preis')
+                    ->formatStateUsing(fn ($state) => $state === null ? 'Offen' : number_format($state / 100, 2, ',', '.') . ' EUR')->sortable(),
+                TextColumn::make('reference_price')->label('Wolt-Referenzpreis')
+                    ->formatStateUsing(fn ($state) => $state === null ? 'Offen' : number_format($state / 100, 2, ',', '.') . ' EUR'),
                 ImageColumn::make('image_path'),
                 IconColumn::make('is_available')
                     ->boolean(),

@@ -24,10 +24,12 @@ class ProductForm
                     ->required()->maxLength(255)->unique(ignoreRecord: true),
                 Textarea::make('description')
                     ->columnSpanFull(),
-                TextInput::make('price')
-                    ->required()->integer()->minValue(0)->prefix('¢'),
+                Textarea::make('ingredients')->label('Zutaten')->columnSpanFull(),
+                TextInput::make('price')->label('Website-Preis in Cent')->integer()->minValue(0),
+                TextInput::make('reference_price')->label('Wolt-Referenzpreis in Cent')->integer()->minValue(0),
                 FileUpload::make('image_path')
                     ->image()->disk('public')->directory('products')->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120),
+                TextInput::make('image_review_note')->label('Bildprüfung')->maxLength(255),
                 Toggle::make('is_available')
                     ->required(),
                 Toggle::make('is_featured')
@@ -35,7 +37,7 @@ class ProductForm
                 TextInput::make('sort_order')
                     ->required()->integer()->minValue(0)
                     ->default(0),
-                Select::make('allergens')->relationship('allergens', 'name')->multiple(),
+                Select::make('allergens')->label('Bestätigte Allergene')->relationship('allergens', 'name')->multiple(),
             ]);
     }
 }

@@ -144,3 +144,82 @@ if (!reducedMotion.matches) {
         });
     }
 }
+
+document.querySelectorAll('[data-map-load]').forEach(button => button.addEventListener('click', () => {
+    const panel = button.closest('[data-map-consent]');
+    if (!panel) return;
+    const iframe = document.createElement('iframe');
+    iframe.title = button.dataset.mapTitle || 'Interaktive Karte';
+    iframe.src = button.dataset.mapSrc;
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.allowFullscreen = true;
+    panel.replaceWith(iframe);
+}));
+
+const menuPage = document.querySelector('[data-menu-page]');
+if (menuPage) {
+    const filters = [...menuPage.querySelectorAll('[data-filter]')];
+    const subfilters = [...menuPage.querySelectorAll('[data-filter-sub]')];
+    const sections = [...menuPage.querySelectorAll('[data-category]')];
+    const search = menuPage.querySelector('[data-menu-search]');
+    const count = menuPage.querySelector('[data-menu-count]');
+    const empty = menuPage.querySelector('[data-menu-empty]');
+    const available = new Set(sections.map(section => section.dataset.category));
+    const selectedFromUrl = () => {
+        const params = new URLSearchParams(location.search);
+        const query = params.get('kategorie');
+        const hash = location.hash.replace('#kategorie-', '');
+        return available.has(query) ? query : available.has(hash) ? hash : 'all';
+    };
+    let selected = selectedFromUrl();
+    let selectedSub = new URLSearchParams(location.search).get('gruppe') || 'all';
+    const render = () => {
+        const term = search.value.trim().toLocaleLowerCase('de-AT');
+        let visible = 0;
+        sections.forEach(section => {
+            let sectionCount = 0;
+            section.querySelectorAll('[data-menu-group]').forEach(group => {
+                let groupCount = 0;
+                group.querySelectorAll('[data-menu-product]').forEach(product => {
+                    const match = (!term || product.dataset.search.includes(term)) && (selected === 'all' || section.dataset.category === selected) && (selectedSub === 'all' || group.dataset.menuGroup === selectedSub);
+                    product.hidden = !match;
+                    if (match) { groupCount++; sectionCount++; visible++; }
+                });
+                group.hidden = groupCount === 0;
+            });
+            section.hidden = sectionCount === 0;
+        });
+        filters.forEach(filter => filter.setAttribute('aria-current', String(filter.dataset.filter === selected)));
+        subfilters.forEach(filter => filter.setAttribute('aria-current', String(filter.dataset.filterSub === selectedSub)));
+        menuPage.querySelector('[data-menu-subfilters]').hidden = !['kaffee', 'drinks'].includes(selected) && selectedSub === 'all';
+        count.textContent = `${visible} ${visible === 1 ? 'Produkt' : 'Produkte'}`;
+        empty.hidden = visible !== 0;
+    };
+    filters.forEach(filter => filter.addEventListener('click', event => {
+        event.preventDefault();
+        selected = filter.dataset.filter;
+        selectedSub = 'all';
+        const url = selected === 'all' ? location.pathname : `${location.pathname}?kategorie=${encodeURIComponent(selected)}`;
+        history.replaceState(null, '', url);
+        render();
+    }));
+    subfilters.forEach(filter => filter.addEventListener('click', event => {
+        event.preventDefault();
+        selectedSub = filter.dataset.filterSub;
+        selected = selectedSub === 'punsch' ? 'all' : ['kaffee', 'iced-coffee', 'milkshakes'].includes(selectedSub) ? 'kaffee' : 'drinks';
+        history.replaceState(null, '', `${location.pathname}?kategorie=${selected}&gruppe=${encodeURIComponent(selectedSub)}`);
+        render();
+    }));
+    search.addEventListener('input', render);
+    window.addEventListener('popstate', () => { selected = selectedFromUrl(); selectedSub = new URLSearchParams(location.search).get('gruppe') || 'all'; render(); });
+    render();
+    menuPage.querySelectorAll('[data-product-open]').forEach(button => button.addEventListener('click', () => {
+        const dialog = menuPage.querySelector(`[data-product-dialog="${button.dataset.productOpen}"]`);
+        dialog?.showModal();
+    }));
+    menuPage.querySelectorAll('[data-product-dialog]').forEach(dialog => {
+        dialog.querySelector('[data-product-close]')?.addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+    });
+}

@@ -5,5 +5,5 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run(): void { /* Real menu and account data are entered only after owner approval. */ }
+    public function run(): void { $this->call([MenuSeeder::class, BusinessInfoSeeder::class, PublishedOffersSeeder::class, CatalogReferenceSeeder::class]); }
 }

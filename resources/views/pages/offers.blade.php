@@ -1,2 +1,17 @@
 @extends('layouts.app')
-@section('content')<h1 class="text-3xl font-semibold">Aktuelle Angebote</h1><div class="grid gap-6 md:grid-cols-3">@forelse ($offers as $offer)<article><img src="{{ \App\Support\ImageUrl::for($offer->image_path) }}" alt="{{ $offer->title }}" loading="lazy"><h2>{{ $offer->title }}</h2><p>{{ $offer->description }}</p><p>{{ number_format($offer->offer_price / 100, 2, ',', '.') }} €</p></article>@empty<p>Derzeit sind keine Angebote veröffentlicht.</p>@endforelse</div>@endsection
+@section('content')
+<div class="editorial-page">
+    <header class="editorial-header container-wide" data-reveal>
+        <p class="eyebrow">MORANO+ · Wien</p>
+        <h1>Aktuelle Angebote</h1>
+        <p>Hier erscheinen unsere derzeit gültigen Angebote.</p>
+    </header>
+    <section class="container-wide offers-page-list" aria-label="Angebote">
+        @forelse($offers as $offer)
+            <x-offer-card :offer="$offer" />
+        @empty
+            <div class="offers-page-empty"><p>Derzeit sind keine Angebote veröffentlicht.</p><x-action-link :href="route('menu')" secondary>Zur Speisekarte</x-action-link></div>
+        @endforelse
+    </section>
+</div>
+@endsection

@@ -28,16 +28,14 @@
     </div>
 </section>
 
+@if($offers->isNotEmpty())
 <section class="offers-section section-pad" aria-labelledby="offers-title">
     <div class="container-wide">
         <div class="section-top" data-reveal><x-section-heading eyebrow="Bei MORANO+" title="Aktuelle Angebote" title-id="offers-title" /><x-action-link :href="route('offers')" secondary>Alle Angebote</x-action-link></div>
-        @if($offers->isNotEmpty())
-            <div class="offer-grid">@foreach($offers as $offer)<x-offer-card :offer="$offer" />@endforeach</div>
-        @else
-            <p class="section-empty">{{ $content->offers_empty_text ?: 'Derzeit sind keine Angebote veröffentlicht.' }}</p>
-        @endif
+        <div class="offer-grid">@foreach($offers as $offer)<x-offer-card :offer="$offer" />@endforeach</div>
     </div>
 </section>
+@endif
 
 <section class="story-section section-pad" aria-labelledby="story-title">
     <div class="container-wide story-grid">
@@ -60,14 +58,17 @@
                 @if($content->address)<address>{{ $content->address }}</address>@else<p class="section-empty">Unsere Adresse wird hier in Kürze ergänzt.</p>@endif
                 @if(!empty($content->hours))
                     <h3>Öffnungszeiten</h3><dl>@foreach($content->hours as $row)<div><dt>{{ $row['label'] }}</dt><dd>{{ $row['time'] }}</dd></div>@endforeach</dl>
+                    @if($content->hours_provisional)<p>Vorläufig laut <a href="{{ $content->hours_source }}" target="_blank" rel="noopener noreferrer">NeoTaste</a> · bitte vor dem Besuch prüfen.</p>@endif
                 @else
                     <p class="section-empty">Die aktuellen Öffnungszeiten werden hier ergänzt.</p>
                 @endif
                 @if($content->phone)<a href="tel:{{ preg_replace('/[^+0-9]/', '', $content->phone) }}">{{ $content->phone }}</a>@endif
                 @if($content->email)<a href="mailto:{{ $content->email }}">{{ $content->email }}</a>@endif
+                @if(\App\Support\BusinessLinks::map($content))<a href="{{ \App\Support\BusinessLinks::map($content) }}" target="_blank" rel="noopener noreferrer">Karte öffnen <span class="sr-only">(öffnet in neuem Tab)</span></a>@endif
+                @foreach(\App\Support\BusinessLinks::socials($content) as $label => $url)<a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $label }} <span class="sr-only">(öffnet in neuem Tab)</span></a>@endforeach
             </div>
-            @if(str_starts_with($content->map_embed_url ?? '', 'https://www.google.com/maps/embed?'))
-                <div class="location-map" data-reveal><iframe title="Karte: Standort von MORANO+" src="{{ $content->map_embed_url }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+            @if(\App\Support\BusinessLinks::mapEmbed($content))
+                <div class="location-map" data-reveal><x-map-consent :content="$content" title="Interaktive Karte: Standort von MORANO+" /></div>
             @else
                 <div class="location-identity" aria-hidden="true"><span>MORANO<span class="brand-plus">+</span></span><span>Wien</span></div>
             @endif
