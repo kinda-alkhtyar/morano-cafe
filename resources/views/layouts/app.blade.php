@@ -15,7 +15,7 @@
     @if(\App\Support\Locale::fa())
         @php $pageMeta = match (request()->route()?->getName()) {
             'menu' => ['منو', 'منوی پینسا، سالاد، ساندویچ، کیک و نوشیدنی در MORANO+ وین.'],
-            'offers' => ['پیشنهادهای روز', 'پیشنهادهای ویژهٔ MORANO+ در وین.'],
+            'offers' => ['پیشنهادهای ویژه', 'پیشنهادهای ویژهٔ MORANO+ در وین.'],
             'about' => ['دربارهٔ ما', 'با کافه و رستوران MORANO+ در وین آشنا شوید.'],
             'contact' => ['تماس و بازدید', 'نشانی و راه‌های تماس با MORANO+ در وین.'],
             'imprint' => ['مشخصات حقوقی', 'مشخصات حقوقی MORANO+ در وین.'],
@@ -37,7 +37,7 @@
     <meta property="og:image" content="{{ asset('images/hero/hero.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{{ \App\Support\Locale::fa() ? 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap' : 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap' }}" rel="stylesheet">
     <title>{{ $pageMeta[0] }}{{ request()->routeIs('home') ? '' : ' · MORANO+' }}</title>
     @if (request()->routeIs('home'))
         <link rel="preload" as="image" href="{{ asset('images/hero/hero.webp') }}" fetchpriority="high">

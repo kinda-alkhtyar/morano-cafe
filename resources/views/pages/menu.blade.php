@@ -32,7 +32,7 @@
                             @else<span class="brand-placeholder" aria-label="{{ \App\Support\Locale::text('Bild wird ergänzt') }}"><span>MORANO<span class="brand-plus">+</span></span></span>@endif
                         </div>
                         <div class="menu-product-body"><h4>{{ \App\Support\Locale::product($product, 'name') }}</h4>@if(\App\Support\Locale::product($product, 'description'))<p>{{ \App\Support\Locale::product($product, 'description') }}</p>@endif
-                            <div class="menu-product-foot">@if($product->price !== null || $product->reference_price !== null)<span>{{ number_format(($product->price ?? $product->reference_price) / 100, 2, ',', '.') }} €@if($product->price === null)<small>{{ \App\Support\Locale::text('Referenzpreis') }}</small>@endif</span>@endif<button type="button" data-product-open="{{ $product->id }}" aria-haspopup="dialog">{{ \App\Support\Locale::text('Details') }}<span aria-hidden="true">↗</span></button></div>
+                            <div class="menu-product-foot">@if($product->price !== null || $product->reference_price !== null)<span class="menu-price"><bdi>{{ number_format(($product->price ?? $product->reference_price) / 100, 2, ',', '.') }} €</bdi>@if($product->price === null)<small>{{ \App\Support\Locale::text('Referenzpreis') }}</small>@endif</span>@endif<button type="button" data-product-open="{{ $product->id }}" aria-haspopup="dialog">{{ \App\Support\Locale::text('Details') }}<span aria-hidden="true">↗</span></button></div>
                         </div>
                     </article>
                 @endforeach
@@ -51,7 +51,7 @@
                 <div class="menu-dialog-copy"><p class="eyebrow">{{ \App\Support\Locale::text($category->name) }}</p><h2 id="dialog-title-{{ $product->id }}">{{ \App\Support\Locale::product($product, 'name') }}</h2>@if(\App\Support\Locale::product($product, 'description'))<p>{{ \App\Support\Locale::product($product, 'description') }}</p>@endif
                     @if(\App\Support\Locale::product($product, 'ingredients'))<h3>{{ \App\Support\Locale::text('Zutaten') }}</h3><p>{{ \App\Support\Locale::product($product, 'ingredients') }}</p>@endif
                     @if($product->allergens->isNotEmpty())<h3>{{ \App\Support\Locale::text('Allergene') }}</h3><p>{{ $product->allergens->pluck('name')->join(', ') }}</p>@endif
-                    @if($product->price !== null || $product->reference_price !== null)<p class="menu-dialog-price">{{ number_format(($product->price ?? $product->reference_price) / 100, 2, ',', '.') }} €@if($product->price === null)<small>{{ \App\Support\Locale::text('Referenzpreis · Restaurantpreis noch zu bestätigen') }}</small>@endif</p>@endif
+                    @if($product->price !== null || $product->reference_price !== null)<p class="menu-dialog-price"><bdi>{{ number_format(($product->price ?? $product->reference_price) / 100, 2, ',', '.') }} €</bdi>@if($product->price === null)<small>{{ \App\Support\Locale::text('Referenzpreis · Restaurantpreis noch zu bestätigen') }}</small>@endif</p>@endif
                 </div></div>
             </dialog>
         @endforeach

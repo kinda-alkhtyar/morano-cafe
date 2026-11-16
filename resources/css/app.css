@@ -320,6 +320,17 @@ html{scroll-padding-top:95px}
 html[dir=rtl] .category-arrow,html[dir=rtl] .menu-product-foot button,html[dir=rtl] .hero-foot a{margin-left:0;margin-right:auto}
 html[dir=rtl] .footer-platforms a:not(:last-child)::after{margin-left:0;margin-right:8px}
 @media(max-width:800px){html[dir=rtl] .brand{width:135px}}
+@media(max-width:480px){.brand,html[dir=rtl] .brand{width:120px}.language-switch{right:76px}html[dir=rtl] .language-switch{right:auto;left:76px}}
+.language-switch{direction:ltr}
+.menu-price{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap}
+html[dir=rtl] .menu-price{align-items:flex-end}
+.menu-price small{font-size:.72em;line-height:1.3}
+html[dir=rtl] .menu-dialog-price{direction:rtl}
+.menu-dialog-price small{display:block;line-height:1.5}
+.menu-dialog-close{width:44px;height:44px}
+html[dir=rtl] .menu-dialog-close{right:auto;left:14px}
+@media(max-width:800px){.menu-filters a,.menu-subfilters a{display:inline-flex;align-items:center;min-height:44px}.menu-product-foot button{min-height:44px}.carousel-controls button{width:44px;height:44px}}
+@media(max-width:800px){.is-inner .site-header,.site-header.is-scrolled,.site-header.is-open{background:var(--forest-deep)}}
 .offer-card{grid-template-columns:42% 58%;min-height:300px;border:1px solid var(--line);background:var(--cream)}
 .offer-image-frame{height:100%;max-height:none;min-height:300px;aspect-ratio:auto}
 .offer-image-frame img{width:100%;height:100%;object-fit:cover}

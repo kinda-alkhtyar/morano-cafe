@@ -16,7 +16,7 @@ class PersianLocaleTest extends TestCase
         $this->get('/')->assertOk()->assertSee('lang="de-AT"', false);
         $this->get('/?lang=fa')->assertOk()->assertSee('lang="fa-IR" dir="rtl"', false)->assertSee('قهوهٔ شما.');
         $this->get('/kontakt')->assertOk()->assertSee('تماس و بازدید');
-        $this->get('/angebote')->assertOk()->assertSee('پیشنهادهای روز');
+        $this->get('/angebote')->assertOk()->assertSee('پیشنهادهای ویژه');
         $this->get('/ueber-uns')->assertOk()->assertSee('دربارهٔ ما');
         $this->get('/speisekarte?lang=de')->assertOk()->assertSee('lang="de-AT"', false);
     }
