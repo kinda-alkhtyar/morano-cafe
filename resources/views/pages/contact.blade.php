@@ -6,7 +6,7 @@
         <h1>{{ \App\Support\Locale::text('Kontakt & Besuch') }}</h1>
         <p>{{ \App\Support\Locale::text('Hier findest du unsere bestätigten Kontaktdaten und den Weg zu uns.') }}</p>
     </header>
-    <section class="container-wide contact-layout" aria-label="Besuchsinformationen">
+    <section class="container-wide contact-layout" aria-label="{{ \App\Support\Locale::text('Besuchsinformationen') }}">
         <div class="contact-details" data-reveal>
             @if($content->address)<div><h2>{{ \App\Support\Locale::text('Adresse') }}</h2><address>{{ $content->address }}</address>
                 @if(\App\Support\BusinessLinks::map($content))<a href="{{ \App\Support\BusinessLinks::map($content) }}" target="_blank" rel="noopener noreferrer">{{ \App\Support\Locale::text('In Google Maps öffnen') }}<span class="sr-only">{{ \App\Support\Locale::text('(öffnet in neuem Tab)') }}</span></a>@endif
@@ -17,7 +17,7 @@
             </div>@endif
             <div><h2>{{ \App\Support\Locale::text('Öffnungszeiten') }}</h2>
                 @if(!empty($content->hours))<dl>@foreach($content->hours as $row)<div><dt>{{ \App\Support\Locale::text($row['label']) }}</dt><dd>{{ $row['time'] }}</dd></div>@endforeach</dl>
-                @if($content->hours_provisional)<p>{{ \App\Support\Locale::text('Vorläufige Öffnungszeiten laut') }}<a href="{{ $content->hours_source }}" target="_blank" rel="noopener noreferrer">{{ \App\Support\Locale::text('NeoTaste') }}</a>{{ \App\Support\Locale::text('. Bitte vor dem Besuch prüfen.') }}</p>@endif
+                @if($content->hours_provisional)<p>{{ \App\Support\Locale::text('Vorläufige Öffnungszeiten laut') }} <a href="{{ $content->hours_source }}" target="_blank" rel="noopener noreferrer">NeoTaste</a>{{ \App\Support\Locale::text('. Bitte vor dem Besuch prüfen.') }}</p>@endif
                 @else<p>{{ \App\Support\Locale::text('Die Öffnungszeiten werden hier ergänzt, sobald sie bestätigt sind.') }}</p>@endif
             </div>
             @if(\App\Support\BusinessLinks::marketplaces($content))<div><h2>{{ \App\Support\Locale::text('Weitere Plattformen') }}</h2><div class="platform-links">

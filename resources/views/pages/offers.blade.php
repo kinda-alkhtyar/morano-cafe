@@ -6,7 +6,7 @@
         <h1>{{ \App\Support\Locale::text('Aktuelle Angebote') }}</h1>
         <p>@if($offers->isNotEmpty()){{ \App\Support\Locale::text('Entdecke unsere veröffentlichten Angebote. Die Einlösung erfolgt zu den angegebenen Bedingungen.') }}@else{{ \App\Support\Locale::text('Aktuelle Angebote findest du hier, sobald sie veröffentlicht sind.') }}@endif</p>
     </header>
-    <section class="container-wide offers-page-list" aria-label="Angebote">
+    <section class="container-wide offers-page-list" aria-label="{{ \App\Support\Locale::text('Angebote') }}">
         @forelse($offers as $offer)
             <x-offer-card :offer="$offer" />
         @empty

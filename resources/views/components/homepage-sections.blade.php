@@ -1,7 +1,7 @@
 <section id="entdecken" class="category-section section-pad" aria-labelledby="category-title">
     <div class="container-wide">
         <div class="section-top" data-reveal><x-section-heading eyebrow="Unsere Speisekarte" title="Worauf hast du Lust?" title-id="category-title" /><x-action-link :href="route('menu')" secondary>{{ \App\Support\Locale::text('Zur Speisekarte') }}</x-action-link></div>
-        <div class="category-grid" aria-label="Speisekarten-Kategorien">
+        <div class="category-grid" aria-label="{{ \App\Support\Locale::text('Speisekarten-Kategorien') }}">
             @foreach($homepageCategories as $category)
                 <a href="{{ route('menu') }}{{ $category['slug'] ? '#kategorie-'.$category['slug'] : '' }}" class="category-tile" data-reveal>
                     @if(\App\Support\ImageUrl::exists($category['image_path']))
@@ -20,10 +20,10 @@
     <div class="container-wide">
         <div class="section-top" data-reveal><x-section-heading eyebrow="Aus unserer Speisekarte" title="Highlights" title-id="featured-title" /><x-action-link :href="route('menu')" secondary>{{ \App\Support\Locale::text('Zur Speisekarte') }}</x-action-link></div>
         @if($featured->isNotEmpty())
-            <div class="carousel-controls" aria-label="Highlights durchblättern"><p>{{ \App\Support\Locale::text('Weitere Highlights ansehen') }}</p><div><button type="button" data-carousel-prev aria-label="Vorherige Highlights">←</button><button type="button" data-carousel-next aria-label="Weitere Highlights">→</button></div></div>
-            <div class="highlights-rail" data-carousel role="region" aria-label="Highlights aus unserer Speisekarte" tabindex="0">@foreach($featured as $product)<x-product-card :product="$product" />@endforeach</div>
+            <div class="carousel-controls" aria-label="{{ \App\Support\Locale::text('Highlights durchblättern') }}"><p>{{ \App\Support\Locale::text('Weitere Highlights ansehen') }}</p><div><button type="button" data-carousel-prev aria-label="{{ \App\Support\Locale::text('Vorherige Highlights') }}">{{ \App\Support\Locale::fa() ? '→' : '←' }}</button><button type="button" data-carousel-next aria-label="{{ \App\Support\Locale::text('Weitere Highlights') }}">{{ \App\Support\Locale::fa() ? '←' : '→' }}</button></div></div>
+            <div class="highlights-rail" data-carousel role="region" aria-label="{{ \App\Support\Locale::text('Highlights aus unserer Speisekarte') }}" tabindex="0">@foreach($featured as $product)<x-product-card :product="$product" />@endforeach</div>
         @else
-            <p class="section-empty">{{ $content->highlights_empty_text ?: 'Unsere Empfehlungen findest du in der Speisekarte.' }}</p>
+            <p class="section-empty">{{ \App\Support\Locale::text($content->highlights_empty_text ?: 'Unsere Empfehlungen findest du in der Speisekarte.') }}</p>
         @endif
     </div>
 </section>
@@ -41,7 +41,7 @@
     <div class="container-wide story-grid">
         <div class="story-photo" data-reveal>
             @if(\App\Support\ImageUrl::exists($content->about_image))
-                <img src="{{ \App\Support\ImageUrl::for($content->about_image) }}" alt="Einblick in MORANO+" loading="lazy" decoding="async" width="960" height="720">
+                <img src="{{ \App\Support\ImageUrl::for($content->about_image) }}" alt="{{ \App\Support\Locale::text('Einblick in MORANO+') }}" loading="lazy" decoding="async" width="960" height="720">
             @else
                 <span class="brand-placeholder" aria-hidden="true"><span>MORANO<span class="brand-plus">+</span></span></span>
             @endif
@@ -58,7 +58,7 @@
                 @if($content->address)<address>{{ $content->address }}</address>@else<p class="section-empty">{{ \App\Support\Locale::text('Unsere Adresse wird hier in Kürze ergänzt.') }}</p>@endif
                 @if(!empty($content->hours))
                     <h3>{{ \App\Support\Locale::text('Öffnungszeiten') }}</h3><dl>@foreach($content->hours as $row)<div><dt>{{ \App\Support\Locale::text($row['label']) }}</dt><dd>{{ $row['time'] }}</dd></div>@endforeach</dl>
-                    @if($content->hours_provisional)<p>{{ \App\Support\Locale::text('Vorläufig laut') }}<a href="{{ $content->hours_source }}" target="_blank" rel="noopener noreferrer">{{ \App\Support\Locale::text('NeoTaste') }}</a>{{ \App\Support\Locale::text('· bitte vor dem Besuch prüfen.') }}</p>@endif
+                    @if($content->hours_provisional)<p>{{ \App\Support\Locale::text('Vorläufig laut') }} <a href="{{ $content->hours_source }}" target="_blank" rel="noopener noreferrer">NeoTaste</a> {{ \App\Support\Locale::text('· bitte vor dem Besuch prüfen.') }}</p>@endif
                 @else
                     <p class="section-empty">{{ \App\Support\Locale::text('Die aktuellen Öffnungszeiten werden hier ergänzt.') }}</p>
                 @endif

@@ -8,8 +8,8 @@
     </header>
     <section class="container-wide editorial-split" aria-labelledby="about-story-title">
         <div class="editorial-image" data-reveal>
-            @if(\App\Support\ImageUrl::exists($content->about_image) && $content->about_image !== 'offers/coffee-cake.webp')<img src="{{ \App\Support\ImageUrl::for($content->about_image) }}" alt="Einblick in MORANO+" loading="lazy" decoding="async" width="960" height="720">
-            @elseif(\App\Support\ImageUrl::exists('cafe/coffee-machine.png'))<img src="{{ asset('images/cafe/coffee-machine.png') }}" alt="Kaffeebar im MORANO+" loading="lazy" decoding="async" width="960" height="720">
+            @if(\App\Support\ImageUrl::exists($content->about_image) && $content->about_image !== 'offers/coffee-cake.webp')<img src="{{ \App\Support\ImageUrl::for($content->about_image) }}" alt="{{ \App\Support\Locale::text('Einblick in MORANO+') }}" loading="lazy" decoding="async" width="960" height="720">
+            @elseif(\App\Support\ImageUrl::exists('cafe/coffee-machine.png'))<img src="{{ asset('images/cafe/coffee-machine.png') }}" alt="{{ \App\Support\Locale::text('Kaffeebar im MORANO+') }}" loading="lazy" decoding="async" width="960" height="720">
             @else<span class="brand-placeholder" aria-hidden="true"><span>MORANO<span class="brand-plus">+</span></span></span>@endif
         </div>
         <div class="editorial-copy" data-reveal>

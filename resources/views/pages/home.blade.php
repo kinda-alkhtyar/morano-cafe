@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <section class="hero" aria-labelledby="hero-title" data-hero>
-    <div class="hero-media" data-hero-media><img src="{{ asset('images/hero/hero.webp') }}" alt="MORANO+ Kaffee und Kuchen" width="1672" height="941" fetchpriority="high" decoding="async"></div>
+    <div class="hero-media" data-hero-media><img src="{{ asset('images/hero/hero.webp') }}" alt="{{ \App\Support\Locale::text('MORANO+ Kaffee und Kuchen') }}" width="1672" height="941" fetchpriority="high" decoding="async"></div>
     <div class="hero-shade"></div>
     <div class="container-wide hero-content">
         <p class="hero-overline" data-hero-line><span class="gold-rule"></span>{{ \App\Support\Locale::text('Café & Restaurant · Wien') }}</p>

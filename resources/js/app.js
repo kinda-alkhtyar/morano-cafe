@@ -42,17 +42,18 @@ window.matchMedia('(min-width: 801px)').addEventListener('change', closeMenu);
 
 const carousel = document.querySelector('[data-carousel]');
 if (carousel) {
+    const rtl = getComputedStyle(carousel).direction === 'rtl';
     const previous = document.querySelector('[data-carousel-prev]');
     const next = document.querySelector('[data-carousel-next]');
     const controls = document.querySelector('.carousel-controls');
     const updateControls = () => {
         controls?.classList.toggle('is-static', carousel.scrollWidth <= carousel.clientWidth + 2);
-        previous.disabled = carousel.scrollLeft <= 2;
-        next.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2;
+        previous.disabled = rtl ? carousel.scrollLeft >= -2 : carousel.scrollLeft <= 2;
+        next.disabled = rtl ? carousel.scrollLeft - carousel.clientWidth <= -carousel.scrollWidth + 2 : carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2;
     };
     const step = () => carousel.firstElementChild?.getBoundingClientRect().width + (parseFloat(getComputedStyle(carousel).columnGap) || 0) || carousel.clientWidth;
-    previous?.addEventListener('click', () => carousel.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next?.addEventListener('click', () => carousel.scrollBy({ left: step(), behavior: 'smooth' }));
+    previous?.addEventListener('click', () => carousel.scrollBy({ left: (rtl ? 1 : -1) * step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => carousel.scrollBy({ left: (rtl ? -1 : 1) * step(), behavior: 'smooth' }));
     carousel.addEventListener('scroll', updateControls, { passive: true });
     window.addEventListener('resize', updateControls);
     updateControls();

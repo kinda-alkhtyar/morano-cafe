@@ -28,6 +28,12 @@ class PersianLocaleTest extends TestCase
         $this->assertCount(60, $products);
         foreach ($products as $product) {
             $this->assertNotEmpty(config('persian.products')[$product->slug]['name'] ?? null, $product->slug);
+            if ($product->description) {
+                $this->assertNotEmpty(config('persian.products')[$product->slug]['description'] ?? null, $product->slug.' description');
+            }
+            foreach (explode(',', (string) $product->ingredients) as $term) {
+                if (trim($term) !== '') $this->assertArrayHasKey(trim($term), config('persian.ingredients'), $product->slug.' ingredient: '.trim($term));
+            }
         }
         $this->get('/speisekarte?lang=fa')->assertOk()->assertSee('پینسای مارگاریتا')->assertSee('سالاد سزار');
     }
